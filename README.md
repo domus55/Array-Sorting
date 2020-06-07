@@ -13,4 +13,4 @@ This project shows how diffrent sorting methods works
 
 <br>
 
-As you can clearly see quick sort is the fastest of these 4 methods, while bubble sort is the slowest one.
+As you can clearly see quick sort is the fastest one of these 4 methods, while bubble sort is the slowest one.
