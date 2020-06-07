@@ -12,14 +12,13 @@ void sortowanieBomblekowe();
 void sortowaniePrzezWstawianie();
 void sortowaniePrzezWybieranie();
 void quicksort(int *tablica, int lewy, int prawy);
-void sortowaniePrzezScalanie();
-int wczytaj();
 void render(int tab[]);
 
 sf::RenderWindow window;
 
-int a = 100000;
-int b = 1000;
+int numberAmount = 100000;
+const int highestNumber = 1000;
+const int frameRate = 30;
 
 int main()
 {
@@ -34,8 +33,7 @@ int main()
 	int odp;
 
 	cin >> odp;
-	cout << "Ile liczb posortowac: "; cin >> a;
-	//odp = 5;
+	cout << "Ile liczb posortowac: "; cin >> numberAmount;
 
 	while (window.isOpen())
 	{
@@ -45,17 +43,16 @@ int main()
 		if (odp == 4)
 		{
 			int *tab;
-			tab = new int[a];
+			tab = new int[numberAmount];
 
 			//wczytywanie losowych liczb do tablicy
-			for (int i = 0; i < a; i++)
+			for (int i = 0; i < numberAmount; i++)
 			{
-				tab[i] = rand() % b;
+				tab[i] = rand() % highestNumber;
 			}
 
-			quicksort(tab, 0, a - 1);
+			quicksort(tab, 0, numberAmount - 1);
 		}
-		if (odp == 5) sortowaniePrzezScalanie();
 	}
 
 	return 0;
@@ -63,16 +60,16 @@ int main()
 
 void sortowanieBomblekowe()
 {
-	int * tab = new int[a];
+	int * tab = new int[numberAmount];
 
-	for (int i = 0; i < a; i++)
+	for (int i = 0; i < numberAmount; i++)
 	{
-		tab[i] = rand() % b;
+		tab[i] = rand() % highestNumber;
 	}
 
-	for (int i = 0; i < a; i++)
+	for (int i = 0; i < numberAmount; i++)
 	{
-		for (int j = 0; j < a - i - 1; j++)
+		for (int j = 0; j < numberAmount - i - 1; j++)
 		{
 			if (tab[j] > tab[j + 1])
 			{
@@ -92,21 +89,21 @@ void sortowaniePrzezWstawianie()
 {
 	int maksymalna = 0;
 	int maksymalnaId = 0;
-	int * tab = new int[a];
-	int * tab2 = new int[a];
+	int * tab = new int[numberAmount];
+	int * tab2 = new int[numberAmount];
 
-	for (int i = 0; i < a; i++)
+	for (int i = 0; i < numberAmount; i++)
 	{
-		tab[i] = rand() % b;
-		tab2[i] = rand() % b;
+		tab[i] = rand() % highestNumber;
+		tab2[i] = rand() % highestNumber;
 	}
 
-	for (int i = 0; i < a; i++)
+	for (int i = 0; i < numberAmount; i++)
 	{
 		maksymalna = 0;
 		maksymalnaId = 0;
 
-		for (int j = 0; j < a; j++)
+		for (int j = 0; j < numberAmount; j++)
 		{
 			if (tab[j] > maksymalna)
 			{
@@ -115,7 +112,7 @@ void sortowaniePrzezWstawianie()
 			}
 		}
 
-		tab2[a - i - 1] = maksymalna;
+		tab2[numberAmount - i - 1] = maksymalna;
 		tab[maksymalnaId] = -1;
 
 		render(tab2);
@@ -126,19 +123,19 @@ void sortowaniePrzezWybieranie()
 {
 	int maksymalna = 0;
 	int maksymalnaId = 0;
-	int * tab = new int[a];
+	int * tab = new int[numberAmount];
 
-	for (int i = 0; i < a; i++)
+	for (int i = 0; i < numberAmount; i++)
 	{
-		tab[i] = rand() % b;
+		tab[i] = rand() % highestNumber;
 	}
 
-	for (int i = 0; i < a; i++)
+	for (int i = 0; i < numberAmount; i++)
 	{
 		maksymalna = 0;
 		maksymalnaId = 0;
 
-		for (int j = 0; j < a - i; j++)
+		for (int j = 0; j < numberAmount - i; j++)
 		{
 			if (tab[j] > maksymalna)
 			{
@@ -146,8 +143,8 @@ void sortowaniePrzezWybieranie()
 				maksymalnaId = j;
 			}
 		}
-		int c = tab[a - i - 1];
-		tab[a - i - 1] = maksymalna;
+		int c = tab[numberAmount - i - 1];
+		tab[numberAmount - i - 1] = maksymalna;
 		tab[maksymalnaId] = c;
 
 		render(tab);
@@ -181,104 +178,6 @@ void quicksort(int *tablica, int lewy, int prawy)
 	
 }
 
-void sortowaniePrzezScalanie()
-{
-	int * tab = new int[a];
-	int * tab2 = new int[a];
-	int leftTab2 = 0;
-	int left = 0;
-	int right = 1;
-
-	for (int i = 0; i < a; i++)
-	{
-		tab[i] = rand() % b;
-	}
-
-	int i = 1;
-
-	for (;;)
-	{
-		left = 0;
-		right = pow(2, i) - 1;
-
-		for (;;)
-		{
-			int left2 = left;
-			int right2 = right;
-
-			for (;;)
-			{
-				//cout << leftTab2 << endl;
-				if (tab[left2] > tab[right2])
-				{
-					tab2[leftTab2] = tab[right2];
-					right2++;
-					leftTab2++;
-				}
-				else
-				{
-					if (tab[left2] == tab[right2])
-					{
-						tab2[leftTab2] = tab[left2];
-						tab2[leftTab2 + 1] = tab[left2];
-						left2++;
-						right2++;
-						leftTab2 += 2;
-					}
-					else
-					{
-						tab2[leftTab2] = tab[left2];
-						left2++;
-						leftTab2++;
-					}
-				}
-
-				if (left2 >= left + pow(2, i))
-				{
-					for (;;)
-					{
-						if (right2 >= right + pow(2, i)) goto next;
-						tab2[leftTab2] = tab[right2];
-						right2++;
-						leftTab2++;
-					}
-				}
-				if (right2 >= right + pow(2, i))
-				{
-					for (;;)
-					{
-						if (left2 >= left + pow(2, i)) goto next;
-						tab2[leftTab2] = tab[left2];
-						left2++;
-						leftTab2++;
-					}
-				}
-			}
-			
-			next:;
-
-			leftTab2 = 0;
-
-			left += pow(2, i);
-			right += pow(2, i);
-
-
-			if (right >= a) break;
-		}
-		
-		i++;
-
-		//tab = tab2;
-
-		//cout << "a";
-
-		render(tab2);
-
-		if (pow(2, i) - 1 > a) break;
-	}
-	cout << "a";
-}
-
 void render(int tab[])
 {
 	sf::Event event;
@@ -291,21 +190,21 @@ void render(int tab[])
 
 	static int prevTime = 0;
 
-	if (clock() - prevTime > 33)
+	if (clock() - prevTime > 1000 / frameRate)
 	{
 		window.clear();
 
 		int c;
 
-		if (a <= 1000) c = 1;
-		else c = a / 10000;
+		if (numberAmount <= 1000) c = 1;
+		else c = numberAmount / 10000;
 
-		for (int i = 0; i < a; i += c)
+		for (int i = 0; i < numberAmount; i += c)
 		{
 			sf::CircleShape point(1);
 
-			point.setFillColor(sf::Color(255, tab[i] / (float)b * 255, 0));
-			point.setPosition(((800.0 / a * i) - 800) * -1, 800.0 / b * tab[i]);
+			point.setFillColor(sf::Color(255, tab[i] / (float)highestNumber * 255, 0));
+			point.setPosition(((800.0 / numberAmount * i) - 800) * -1, 800.0 / highestNumber * tab[i]);
 
 
 			window.draw(point);
@@ -314,18 +213,4 @@ void render(int tab[])
 		prevTime = clock();
 		window.display();
 	}
-}
-
-int wczytaj()
-{
-	std::fstream plik;
-	plik.open("options.txt", std::ios::in);
-
-	int x;
-
-	plik >> x;
-
-	plik.close();
-
-	return x;
 }
