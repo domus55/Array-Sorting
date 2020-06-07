@@ -8,11 +8,11 @@
 
 using namespace std;
 
-void sortowanieBomblekowe();
-void sortowaniePrzezWstawianie();
-void sortowaniePrzezWybieranie();
-void quicksort(int *tablica, int lewy, int prawy);
-void render(int tab[]);
+void BubbleSort();
+void InsertSort();
+void SelectionSort();
+void QuickSort(int *tablica, int lewy, int prawy);
+void Render(int tab[]);
 
 sf::RenderWindow window;
 
@@ -22,43 +22,43 @@ const int frameRate = 30;
 
 int main()
 {
-	window.create(sf::VideoMode(800, 800, 32), "Sortowanie", sf::Style::Close);
+	window.create(sf::VideoMode(800, 800, 32), "Sorting", sf::Style::Close);
 
-	cout << "ktore sortowanie wybierasz: \n";
-	cout << "1. bombelkowe \n";
-	cout << "2. przez wstawianie \n";
-	cout << "3. przez wybieranie \n";
+	cout << "Which sorting method do you choose: \n";
+	cout << "1. bubble sort \n";
+	cout << "2. insert sort \n";
+	cout << "3. selection sort \n";
 	cout << "4. quick sort \n";
 
 	int odp;
 
 	cin >> odp;
-	cout << "Ile liczb posortowac: "; cin >> numberAmount;
+	cout << "How many numbers to sort: "; cin >> numberAmount;
 
 	while (window.isOpen())
 	{
-		if (odp == 1) sortowanieBomblekowe();
-		if (odp == 2) sortowaniePrzezWstawianie();
-		if (odp == 3) sortowaniePrzezWybieranie();
+		if (odp == 1) BubbleSort();
+		if (odp == 2) InsertSort();
+		if (odp == 3) SelectionSort();
 		if (odp == 4)
 		{
 			int *tab;
 			tab = new int[numberAmount];
 
-			//wczytywanie losowych liczb do tablicy
+			//loading random numbers to the array
 			for (int i = 0; i < numberAmount; i++)
 			{
 				tab[i] = rand() % highestNumber;
 			}
 
-			quicksort(tab, 0, numberAmount - 1);
+			QuickSort(tab, 0, numberAmount - 1);
 		}
 	}
 
 	return 0;
 }
 
-void sortowanieBomblekowe()
+void BubbleSort()
 {
 	int * tab = new int[numberAmount];
 
@@ -81,11 +81,11 @@ void sortowanieBomblekowe()
 			}
 		}
 
-		render(tab);
+		Render(tab);
 	}
 }
 
-void sortowaniePrzezWstawianie()
+void InsertSort()
 {
 	int maksymalna = 0;
 	int maksymalnaId = 0;
@@ -115,11 +115,11 @@ void sortowaniePrzezWstawianie()
 		tab2[numberAmount - i - 1] = maksymalna;
 		tab[maksymalnaId] = -1;
 
-		render(tab2);
+		Render(tab2);
 	}
 }
 
-void sortowaniePrzezWybieranie()
+void SelectionSort()
 {
 	int maksymalna = 0;
 	int maksymalnaId = 0;
@@ -147,11 +147,11 @@ void sortowaniePrzezWybieranie()
 		tab[numberAmount - i - 1] = maksymalna;
 		tab[maksymalnaId] = c;
 
-		render(tab);
+		Render(tab);
 	}
 }
 
-void quicksort(int *tablica, int lewy, int prawy)
+void QuickSort(int *tablica, int lewy, int prawy)
 {
 	int v = tablica[(lewy + prawy) / 2];
 	int i, j, x;
@@ -169,16 +169,16 @@ void quicksort(int *tablica, int lewy, int prawy)
 			i++;
 			j--;
 
-			render(tablica);
+			Render(tablica);
 		}
 	} while (i <= j);
-	if (j > lewy) quicksort(tablica, lewy, j);
-	if (i < prawy) quicksort(tablica, i, prawy);
+	if (j > lewy) QuickSort(tablica, lewy, j);
+	if (i < prawy) QuickSort(tablica, i, prawy);
 
 	
 }
 
-void render(int tab[])
+void Render(int tab[])
 {
 	sf::Event event;
 	while (window.pollEvent(event))
