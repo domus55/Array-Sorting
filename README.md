@@ -1,4 +1,5 @@
 # Array-Sorting
+I made this project to get a better grade ฅ^•ﻌ•^ฅ <br>
 This project shows how diffrent sorting methods works
 
 ## Menu
